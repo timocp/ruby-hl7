@@ -7,23 +7,6 @@ describe HL7::Message::Segment::PID do
       @base = "PID|1||333||LastName^FirstName^MiddleInitial^SR^NickName||19760228|F||2106-3^White^HL70005^CAUC^Caucasian^L||AA||||||555.55|012345678||||||||||201011110924-0700|Y|||||||||"
     end
 
-    it 'validates the admin_sex element' do
-      pid = HL7::Message::Segment::PID.new
-      expect do
-        vals = %w[F M O U A N C] + [ nil ]
-        vals.each do |x|
-          pid.admin_sex = x
-        end
-        pid.admin_sex = ""
-      end.not_to raise_error
-
-      expect do
-        ["TEST", "A", 1, 2].each do |x|
-          pid.admin_sex = x
-        end
-      end.to raise_error(HL7::InvalidDataError)
-    end
-
     it "sets values correctly" do
       pid = HL7::Message::Segment::PID.new @base
       expect(pid.set_id).to eq "1"
